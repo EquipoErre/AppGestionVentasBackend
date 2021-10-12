@@ -1,0 +1,13 @@
+{
+  "name": "appgestionventasbackend",
+  "version": "1.0.0",
+  "description": "proyecto ciclo 3",
+  "main": "index.js",
+  "repository": "https://github.com/EquipoErre/AppGestionVentasBackend",
+  "author": "Rosmy Gaviria <roslore55@gmail.com>",
+  "license": "MIT",
+  "private": false,
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
