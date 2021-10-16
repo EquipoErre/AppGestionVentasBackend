@@ -1,9 +1,10 @@
 import { getDB } from "../../db/db.js";
 import { ObjectId } from "mongodb";
+import jwt_decode from 'jwt-decode';
 
 const queryAllUsers = async (callback) => {
   let conexion = getDB();
-  await conexion.collection("usuarios").find({}).toArray(callback);
+  await conexion.collection("usuarios").find({}).limit(50).toArray(callback);
 };
 
 const createUser = async (datosUsuario, callback) => {
@@ -46,4 +47,20 @@ const findOneUser = async( id, callback) =>{
     .collection("usuarios")
     .findOne({ _id: new ObjectId(id) }, callback);
 }
-export { queryAllUsers, createUser, updateUser, deleteUser, findOneUser };
+
+const consultarOCrearUsuarioPorEmail = async (req, callback) => {
+  const token = req.headers.authorization.split('Bearer ')[1];
+  const usuario = jwt_decode(token)['http://localhost/user'];
+  const conexion = getDB();
+  await conexion.collection('usuarios').findOne({ correo: usuario.correo }, async (err, res) => {
+    if (res) {
+      callback(err, res);
+    } else {
+      usuario._idAuth0 = usuario._id;
+      delete usuario._id;
+      await createUser(usuario, (err, res) => callback(err, usuario));
+    }
+  });
+};
+
+export { queryAllUsers, createUser, updateUser, deleteUser, findOneUser, consultarOCrearUsuarioPorEmail };
