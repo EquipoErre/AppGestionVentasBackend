@@ -5,7 +5,7 @@ import { conectarDB } from "./db/db.js";
 import jwt from 'express-jwt';
 import jwks from 'jwks-rsa';
 
-import userMiddleware from './middleware/users.js';
+import autorizacionEstadoUsuario from './middleware/autorizacionEstadoUsuario.js';
 import rutasUsuarios from "./views/usuarios/rutas.js";
 import rutasVentas from "./views/ventas/rutas.js";
 import rutasProductos from "./views/productos/rutas.js";
@@ -29,8 +29,8 @@ var jwtCheck = jwt({
   algorithms: ['RS256'],
 });
 
-app.use(jwtCheck);
-app.use(userMiddleware);
+//app.use(jwtCheck); //Se debe habilitar cuando se este enviando el token
+app.use(autorizacionEstadoUsuario);
 
 app.use(rutasUsuarios);
 app.use(rutasVentas);
