@@ -1,5 +1,5 @@
 import Express from "express";
-import { createUser, deleteUser, findOneUser, queryAllUsers, updateUser } from "../../controllers/usuarios/controller.js";
+import { createUser, deleteUser, findOneUser, queryAllUsers, updateUser, findOrCreateUser } from "../../controllers/usuarios/controller.js";
 
 
 const rutasUsuarios = Express.Router();
@@ -12,10 +12,17 @@ const genericCallback = (res) => (err, result) => {
   }
 };
 
+
 rutasUsuarios.route("/usuarios").get((req, res) => {
   console.log("peticion get a /usuarios");
   queryAllUsers(genericCallback(res));
 });
+
+rutasUsuarios.route("/usuarios/self").get((req, res) => {
+  console.log(`peticion get ruta self` );
+  findOrCreateUser(req, genericCallback(res))
+});
+
 rutasUsuarios.route("/usuarios/:id").get((req, res) => {
   console.log(`peticion get de ${req.params.id}` );
   findOneUser(req.params.id, genericCallback(res))
