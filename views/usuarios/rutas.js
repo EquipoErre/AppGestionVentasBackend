@@ -20,7 +20,7 @@ rutasUsuarios.route("/usuarios").get((req, res) => {
 
 rutasUsuarios.route("/usuarios/self").get((req, res) => {
   console.log(`peticion get ruta self` );
-  findOrCreateUser(req, genericCallback(res))
+  // findOrCreateUser(req, genericCallback(res))
 });
 
 rutasUsuarios.route("/usuarios/:id").get((req, res) => {

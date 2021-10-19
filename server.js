@@ -29,7 +29,7 @@ var jwtCheck = jwt({
   algorithms: ['RS256'],
 });
 
-//app.use(jwtCheck); //Se debe habilitar cuando se este enviando el token
+app.use(jwtCheck); //Se debe habilitar cuando se este enviando el token
 app.use(autorizacionEstadoUsuario);
 
 app.use(rutasUsuarios);
