@@ -54,13 +54,14 @@ const findOrCreateUser = async (req, callback) => {
     const usuario = jwt_decode(token)['http://localhost/userData'];
     if (usuario) {
       const conexion = getDB();
-      await conexion.collection('usuarios').findOne({ correo: usuario.email }, async (err, res) => {
+      await conexion.collection('usuarios').findOne({ email: usuario.email }, async (err, res) => {
         if (res) {
-          callback(err, res);
+          console.log('usuario ya existe')
+          callback(err, res)
         } else {
           usuario.auth0ID = usuario._id;
           delete usuario._id;
-          usuario.rol = 'sin rol';
+          usuario.rol = 'pendiente';
           usuario.estado = 'pendiente';
           await createUser(usuario, (err, res) => callback(err, usuario));
         }
