@@ -9,15 +9,15 @@ const queryAllUsers = async (callback) => {
 
 const createUser = async (datosUsuario, callback) => {
   let conexion = getDB();
-  console.log("llaves: ", Object.keys(datosUsuario));
-  if (
-    Object.keys(datosUsuario).includes("correo") &&
-    Object.keys(datosUsuario).includes("nombre")
-  ) {
+  console.log('creando usuario');
+  // if (
+  //   Object.keys(datosUsuario).includes("correo") &&
+  //   Object.keys(datosUsuario).includes("nombre")
+  // ) {
     await conexion.collection("usuarios").insertOne(datosUsuario, callback);
-  } else {
-    return { err: "conditions not met", result: "" };
-  }
+  // } else {
+  //   return { err: "conditions not met", result: "" };
+  // }
 };
 
 const updateUser = async (id, edicion, callback) => {
