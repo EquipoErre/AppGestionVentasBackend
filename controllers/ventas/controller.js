@@ -9,7 +9,6 @@ const queryAllSales = async (callback) => {
 
 const createSale = async (datosVenta, callback) => {
   let conexion = getDB();
-  console.log("llaves: ", Object.keys(datosVenta));
   await conexion.collection("ventas").insertOne(datosVenta, callback);
   return { err: "conditions not met", result: "" };
 };
