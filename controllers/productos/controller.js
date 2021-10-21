@@ -8,7 +8,6 @@ const queryAllProducts = async (callback) => {
 
 const createProduct = async (datosProducto, callback) => {
   let conexion = getDB();
-  console.log("llaves: ", Object.keys(datosProducto));
   await conexion.collection("productos").insertOne(datosProducto, callback);
 };
 

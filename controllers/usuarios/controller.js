@@ -9,15 +9,7 @@ const queryAllUsers = async (callback) => {
 
 const createUser = async (datosUsuario, callback) => {
   let conexion = getDB();
-  console.log("llaves: ", Object.keys(datosUsuario));
-  if (
-    Object.keys(datosUsuario).includes("correo") &&
-    Object.keys(datosUsuario).includes("nombre")
-  ) {
-    await conexion.collection("usuarios").insertOne(datosUsuario, callback);
-  } else {
-    return { err: "conditions not met", result: "" };
-  }
+  await conexion.collection("usuarios").insertOne(datosUsuario, callback);
 };
 
 const updateUser = async (id, edicion, callback) => {
@@ -49,24 +41,20 @@ const findOneUser = async( id, callback) =>{
 }
 
 const findOrCreateUser = async (req, callback) => {
-  if (req.headers.authorization) {
     const token = req.headers.authorization.split('Bearer ')[1];
     const usuario = jwt_decode(token)['http://localhost/userData'];
-    if (usuario) {
-      const conexion = getDB();
-      await conexion.collection('usuarios').findOne({ correo: usuario.email }, async (err, res) => {
-        if (res) {
-          callback(err, res);
-        } else {
-          usuario.auth0ID = usuario._id;
-          delete usuario._id;
-          usuario.rol = 'sin rol';
-          usuario.estado = 'pendiente';
-          await createUser(usuario, (err, res) => callback(err, usuario));
-        }
-      });
-    }
-  }
+    const conexion = getDB();
+    await conexion.collection('usuarios').findOne({ email: usuario.email }, async (err, res) => {
+      if (res) {
+        callback(err, res);
+      } else {
+        usuario.auth0ID = usuario._id;
+        delete usuario._id;
+        usuario.rol = 'sin rol';
+        usuario.estado = 'pendiente';
+        await createUser(usuario, (err, res) => callback(err, usuario));
+      }
+    });
 };
 
 export { queryAllUsers, createUser, updateUser, deleteUser, findOneUser, findOrCreateUser };
