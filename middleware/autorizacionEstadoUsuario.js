@@ -7,9 +7,9 @@ const autorizacionEstadoUsuario = async (req, res, next) => {
     if (token){
       const usuario = jwt_decode(token)['http://localhost/userData'];
       const conexion = getDB();
-      await conexion.collection('usuarios').findOne({ email: usuario.email }, async (err, res) => {
-        if (res) {
-          if (res.estado === 'no autorizado'){
+      await conexion.collection('usuarios').findOne({ email: usuario.email }, async (err, response) => {
+        if (response) {
+          if (response.estado === 'no autorizado'){
             res.sendStatus(401);
             res.end();
           } else {
