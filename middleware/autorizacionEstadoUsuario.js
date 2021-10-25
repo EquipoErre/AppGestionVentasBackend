@@ -9,7 +9,7 @@ const autorizacionEstadoUsuario = async (req, res, next) => {
       const conexion = getDB();
       await conexion.collection('usuarios').findOne({ email: usuario.email }, async (err, res) => {
         if (res) {
-          if (res.estado === 'rechazado'){
+          if (res.estado === 'no autorizado'){
             res.sendStatus(401);
             res.end();
           } else {
