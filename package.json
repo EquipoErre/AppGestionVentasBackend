@@ -9,7 +9,10 @@
   "private": false,
   "type": "module",
   "scripts": {
-    "start": "nodemon server.js"
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": "14.x"
   },
   "dependencies": {
     "cors": "^2.8.5",
